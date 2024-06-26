@@ -29,14 +29,14 @@ public class ImplViagemService implements ServiceViagem {
     }
 
     @Override
-    public String deleteViagem(Long viagemId) {
-        viagemRepository.deleteById(viagemId);
+    public String deleteViagem(Long id) {
+        viagemRepository.deleteById(id);
         return "Viagem deletada com sucesso!";
     }
 
     @Override
-    public Viagem getViagem(Long viagemId) {
-        return viagemRepository.findById(viagemId).orElse(null);
+    public Viagem getViagem(Long id) {
+        return viagemRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -44,3 +44,4 @@ public class ImplViagemService implements ServiceViagem {
         return viagemRepository.findAll();
     }
 }
+
