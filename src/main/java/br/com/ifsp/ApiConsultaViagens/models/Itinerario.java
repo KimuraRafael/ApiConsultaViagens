@@ -1,26 +1,27 @@
 package br.com.ifsp.ApiConsultaViagens.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "itinerario_info")
 public class Itinerario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String descricao;
     private String localParada;
-
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHora;
 
     @ManyToOne
     @JoinColumn(name = "viagem_id")
+    @JsonIgnoreProperties("itinerarios")
     private Viagem viagem;
-
     public Itinerario() {}
 
     public Itinerario(Long id, String descricao, String localParada, LocalDateTime dataHora, Viagem viagem) {

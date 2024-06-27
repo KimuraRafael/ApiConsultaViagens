@@ -3,6 +3,9 @@ package br.com.ifsp.ApiConsultaViagens.models;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "viagem_info")
 public class Viagem {
@@ -11,7 +14,8 @@ public class Viagem {
     private Long viagemId;
     private String descricaoViagem;
 
-    @OneToMany(mappedBy = "viagem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "viagem")
+    @JsonIgnoreProperties("viagem")
     private List<Itinerario> itinerarios;
 
     public Viagem() {}
