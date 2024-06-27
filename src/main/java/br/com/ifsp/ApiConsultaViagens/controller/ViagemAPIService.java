@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.ifsp.ApiConsultaViagens.models.Viagem;
-import br.com.ifsp.ApiConsultaViagens.repository.ApiConsultaViagensViagensRepository;
+import br.com.ifsp.ApiConsultaViagens.repository.ViagensRepository;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ViagemAPIService {
 
     @Autowired
-    private ApiConsultaViagensViagensRepository viagemRepository;
+    private ViagensRepository viagemRepository;
 
     @PostMapping
     public ResponseEntity<Viagem> createViagem(@RequestBody Viagem viagem) {

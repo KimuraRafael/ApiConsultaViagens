@@ -4,15 +4,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.ifsp.ApiConsultaViagens.models.Itinerario;
-import br.com.ifsp.ApiConsultaViagens.repository.ApiConsultaViagensItinerarioRepository;
+import br.com.ifsp.ApiConsultaViagens.repository.ItinerarioRepository;
 
 @Service
 public class ImplItinerarioService implements ServiceItinerario {
 
-    private final ApiConsultaViagensItinerarioRepository itinerarioRepository;
+    private final ItinerarioRepository itinerarioRepository;
 
     @Autowired
-    public ImplItinerarioService(ApiConsultaViagensItinerarioRepository itinerarioRepository) {
+    public ImplItinerarioService(ItinerarioRepository itinerarioRepository) {
         this.itinerarioRepository = itinerarioRepository;
     }
 

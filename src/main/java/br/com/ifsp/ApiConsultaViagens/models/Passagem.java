@@ -4,9 +4,14 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,6 +19,7 @@ import jakarta.persistence.Table;
 public class Passagem {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long passagemId;
     private String passagemOrigem;
     private String passagemDestino;
@@ -26,7 +32,13 @@ public class Passagem {
     private BigDecimal passagemValor;
     private String veiculo;
     
-    public Passagem() {}
+    @ManyToOne
+    @JoinColumn(name = "viagem_id")
+    @JsonIgnoreProperties("passagens")
+    private Viagem viagem;
+    
+
+	public Passagem() {}
 
     public Passagem(Long passagemId, String passagemOrigem, String passagemDestino, LocalDateTime dataCompra,
                     LocalDateTime dataChegada, BigDecimal passagemValor, String veiculo) {
@@ -94,5 +106,13 @@ public class Passagem {
     public void setVeiculo(String veiculo) {
         this.veiculo = veiculo;
     }
+    public Viagem getViagem() {
+		return viagem;
+	}
+
+	public void setViagem(Viagem viagem) {
+		this.viagem = viagem;
+	}
+
 }
 

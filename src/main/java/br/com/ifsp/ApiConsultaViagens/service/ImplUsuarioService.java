@@ -4,15 +4,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.ifsp.ApiConsultaViagens.models.Usuario;
-import br.com.ifsp.ApiConsultaViagens.repository.ApiConsultaViagensUsuarioRepository;
+import br.com.ifsp.ApiConsultaViagens.repository.UsuarioRepository;
 
 @Service
 public class ImplUsuarioService implements ServiceUsuario {
 
-    private final ApiConsultaViagensUsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    public ImplUsuarioService(ApiConsultaViagensUsuarioRepository usuarioRepository) {
+    public ImplUsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 

@@ -11,18 +11,28 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Viagem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long viagemId;
     private String descricaoViagem;
+    private Long qtd_assentos;
 
     @OneToMany(mappedBy = "viagem")
     @JsonIgnoreProperties("viagem")
     private List<Itinerario> itinerarios;
+    
+    @OneToMany(mappedBy = "viagem")
+    @JsonIgnoreProperties("viagem")
+    private List<Passagem> passagens;
 
-    public Viagem() {}
+   
+	
 
-    public Viagem(Long viagemId, String descricaoViagem, List<Itinerario> itinerarios) {
+	public Viagem() {}
+
+    public Viagem(Long viagemId, String descricaoViagem, Long qtd_assentos ,List<Itinerario> itinerarios) {
         this.viagemId = viagemId;
         this.descricaoViagem = descricaoViagem;
+        this.qtd_assentos = qtd_assentos;
         this.itinerarios = itinerarios;
     }
 
@@ -42,6 +52,14 @@ public class Viagem {
         this.descricaoViagem = descricaoViagem;
     }
 
+    public Long getQtd_assentos() {
+		return qtd_assentos;
+	}
+
+	public void setQtd_assentos(Long qtd_assentos) {
+		this.qtd_assentos = qtd_assentos;
+	}
+
     public List<Itinerario> getItinerarios() {
         return itinerarios;
     }
@@ -49,6 +67,14 @@ public class Viagem {
     public void setItinerarios(List<Itinerario> itinerarios) {
         this.itinerarios = itinerarios;
     }
+    
+    public List<Passagem> getPassagens() {
+		return passagens;
+	}
+
+	public void setPassagens(List<Passagem> passagens) {
+		this.passagens = passagens;
+	}
 }
 
 

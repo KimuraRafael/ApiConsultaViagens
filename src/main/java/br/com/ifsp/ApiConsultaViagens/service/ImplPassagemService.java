@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifsp.ApiConsultaViagens.ApiConsultaViagensApplication;
 import br.com.ifsp.ApiConsultaViagens.models.Passagem;
-import br.com.ifsp.ApiConsultaViagens.repository.ApiConsultaViagensRepository;
+import br.com.ifsp.ApiConsultaViagens.repository.PassagensRepository;
 
 @Service
 public class ImplPassagemService implements ServicePassagem {
 
-    private ApiConsultaViagensRepository apiConsultaViagensRepository;
+    private PassagensRepository apiConsultaViagensRepository;
 
     @Autowired
-    public ImplPassagemService(ApiConsultaViagensRepository apiConsultaViagensRepository) {
+    public ImplPassagemService(PassagensRepository apiConsultaViagensRepository) {
         this.apiConsultaViagensRepository = apiConsultaViagensRepository;
     }
 
