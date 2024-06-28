@@ -20,6 +20,7 @@ import br.com.ifsp.ApiConsultaViagens.repository.ViagensRepository;
 import br.com.ifsp.ApiConsultaViagens.service.ServicePassagem;
 
 @RestController
+@CrossOrigin(origins = "*") 
 @RequestMapping("/passagens")
 public class PassagemAPIService {
 
@@ -48,6 +49,7 @@ public class PassagemAPIService {
             return "Passagem não encontrada!";
         }
     }
+
 
     @GetMapping
     public List<Passagem> getAllPassagem() {

@@ -1,6 +1,7 @@
 package br.com.ifsp.ApiConsultaViagens.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,7 +17,10 @@ public class Itinerario {
 
     private String descricao;
     private String localParada;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHora;
+    
+    
 
     @ManyToOne
     @JoinColumn(name = "viagem_id")

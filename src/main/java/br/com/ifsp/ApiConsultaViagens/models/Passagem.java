@@ -37,6 +37,8 @@ public class Passagem {
     @JsonIgnoreProperties("passagens")
     private Viagem viagem;
     
+    
+    
 
 	public Passagem() {}
 
