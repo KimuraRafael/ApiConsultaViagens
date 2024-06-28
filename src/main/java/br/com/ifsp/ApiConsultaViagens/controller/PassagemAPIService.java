@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -52,41 +53,29 @@ public class PassagemAPIService {
     public List<Passagem> getAllPassagem() {
         return servicePassagem.getAllPassagem();
     }
-
-   /* @PostMapping
-    public String createPassagem(@RequestBody Passagem passagem) {
-    	
-    	  /*Viagem viagem = viagemRepository.findById(passagem.getViagem().getViagemId()).orElseThrow(() -> new RuntimeException("Viagem não encontrada"));
-          
-          if(viagem.getQtd_assentos() <=0) {
-          	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não há mais passagens disponíveis");
-          }
-          
-          viagem.setQtd_assentos(viagem.getQtd_assentos() - 1);
-          viagemRepository.save(viagem);
-          
-          
-    	logger.info("Chamando createPassagem com passagemId: " + passagem.getPassagemId());
-        return servicePassagem.createPassagem(passagem);
-    }*/
     
     @PostMapping
-    public String createPassagem2(@RequestBody PassagensDTO passagemDTO) {
-    	   Viagem viagem = viagemRepository.findById(passagemDTO.getViagemId())
-                   .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Viagem não encontrada"));
+    public ResponseEntity<String> createPassagem2(@RequestBody PassagensDTO passagemDTO) {
+        Long viagemId = passagemDTO.getViagemId();
+        if (viagemId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID da Viagem não pode ser nulo");
+        }
+        
+        Viagem viagem = viagemRepository.findById(viagemId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Viagem não encontrada"));
 
-           Passagem passagem = new Passagem();
-           passagem.setViagem(viagem);
-           passagem.setPassagemOrigem(passagemDTO.getPassagemOrigem());
-           passagem.setPassagemDestino(passagemDTO.getPassagemDestino());
-           passagem.setDataCompra(passagemDTO.getDataCompra());
-           passagem.setDataChegada(passagemDTO.getDataChegada());
-           passagem.setPassagemValor(passagemDTO.getPassagemValor());
-           passagem.setVeiculo(passagemDTO.getVeiculo());
+        Passagem passagem = new Passagem();
+        passagem.setViagem(viagem);
+        passagem.setPassagemOrigem(passagemDTO.getPassagemOrigem());
+        passagem.setPassagemDestino(passagemDTO.getPassagemDestino());
+        passagem.setDataCompra(passagemDTO.getDataCompra());
+        passagem.setDataChegada(passagemDTO.getDataChegada());
+        passagem.setPassagemValor(passagemDTO.getPassagemValor());
+        passagem.setVeiculo(passagemDTO.getVeiculo());
 
-           passagemRepository.save(passagem);
-    	logger.info("Chamando createPassagem com passagemId: " + passagem.getPassagemId());
-        return servicePassagem.createPassagem(passagem);
+        passagemRepository.save(passagem);
+
+        return ResponseEntity.ok("Passagem criada com sucesso: " + passagem.getPassagemId());
     }
 
     @PutMapping

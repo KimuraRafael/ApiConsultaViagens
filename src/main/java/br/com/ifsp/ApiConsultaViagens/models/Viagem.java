@@ -16,11 +16,11 @@ public class Viagem {
     private String descricaoViagem;
     private Long qtd_assentos;
 
-    @OneToMany(mappedBy = "viagem")
+    @OneToMany(mappedBy = "viagem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("viagem")
     private List<Itinerario> itinerarios;
     
-    @OneToMany(mappedBy = "viagem")
+    @OneToMany(mappedBy = "viagem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("viagem")
     private List<Passagem> passagens;
 

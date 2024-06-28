@@ -30,8 +30,12 @@ public class ImplViagemService implements ServiceViagem {
 
     @Override
     public String deleteViagem(Long id) {
-        viagemRepository.deleteById(id);
-        return "Viagem deletada com sucesso!";
+        try {
+            viagemRepository.deleteById(id);
+            return "Viagem deletada com sucesso!";
+        } catch (Exception e) {
+            return "Erro ao deletar viagem: " + e.getMessage();
+        }
     }
 
     @Override

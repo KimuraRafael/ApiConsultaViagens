@@ -14,7 +14,6 @@ public class PassagensDTO {
  private String veiculo;
  
  
- 
  PassagensDTO(){}
 
 
