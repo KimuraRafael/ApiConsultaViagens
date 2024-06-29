@@ -3,9 +3,10 @@ package br.com.ifsp.ApiConsultaViagens.DTO;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class PassagensDTO {
+public class PassagensPostDTO {
 	
  private Long viagemId;
+ private Long usuarioId;
  private String passagemOrigem;
  private String passagemDestino;
  private LocalDateTime dataCompra;
@@ -14,7 +15,7 @@ public class PassagensDTO {
  private String veiculo;
  
  
- PassagensDTO(){}
+ PassagensPostDTO(){}
 
 
 
@@ -98,6 +99,18 @@ public String getVeiculo() {
 
 public void setVeiculo(String veiculo) {
 	this.veiculo = veiculo;
+}
+
+
+
+public Long getUsuarioId() {
+	return usuarioId;
+}
+
+
+
+public void setUsuarioId(Long userId) {
+	this.usuarioId = userId;
 }
  
  

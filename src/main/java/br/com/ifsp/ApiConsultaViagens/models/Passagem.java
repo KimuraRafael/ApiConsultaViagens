@@ -37,21 +37,32 @@ public class Passagem {
     @JsonIgnoreProperties("passagens")
     private Viagem viagem;
     
+   
+
+	@ManyToOne
+    @JoinColumn(name="usuarioId")
+    private Usuario user;
+    
     
     
 
 	public Passagem() {}
 
     public Passagem(Long passagemId, String passagemOrigem, String passagemDestino, LocalDateTime dataCompra,
-                    LocalDateTime dataChegada, BigDecimal passagemValor, String veiculo) {
-        this.passagemId = passagemId;
-        this.passagemOrigem = passagemOrigem;
-        this.passagemDestino = passagemDestino;
-        this.dataCompra = dataCompra;
-        this.dataChegada = dataChegada;
-        this.passagemValor = passagemValor;
-        this.veiculo = veiculo;
-    }
+			LocalDateTime dataChegada, BigDecimal passagemValor, String veiculo, Viagem viagem, Usuario user) {
+		super();
+		this.passagemId = passagemId;
+		this.passagemOrigem = passagemOrigem;
+		this.passagemDestino = passagemDestino;
+		this.dataCompra = dataCompra;
+		this.dataChegada = dataChegada;
+		this.passagemValor = passagemValor;
+		this.veiculo = veiculo;
+		this.viagem = viagem;
+		this.user = user;
+	}
+
+	
 
     public Long getPassagemId() {
         return passagemId;
@@ -116,5 +127,12 @@ public class Passagem {
 		this.viagem = viagem;
 	}
 
+	 public Usuario getUser() {
+			return user;
+		}
+
+		public void setUser(Usuario user) {
+			this.user = user;
+		}
 }
 

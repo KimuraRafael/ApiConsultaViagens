@@ -10,6 +10,7 @@ import br.com.ifsp.ApiConsultaViagens.models.Itinerario;
 import br.com.ifsp.ApiConsultaViagens.service.ServiceItinerario;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/itinerarios")
 public class ItinerarioAPIService {
 

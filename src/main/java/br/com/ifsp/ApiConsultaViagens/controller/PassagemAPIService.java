@@ -12,10 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.ifsp.ApiConsultaViagens.DTO.PassagensDTO;
+import br.com.ifsp.ApiConsultaViagens.DTO.PassagensPostDTO;
 import br.com.ifsp.ApiConsultaViagens.models.Passagem;
+import br.com.ifsp.ApiConsultaViagens.models.Usuario;
 import br.com.ifsp.ApiConsultaViagens.models.Viagem;
 import br.com.ifsp.ApiConsultaViagens.repository.PassagensRepository;
+import br.com.ifsp.ApiConsultaViagens.repository.UsuarioRepository;
 import br.com.ifsp.ApiConsultaViagens.repository.ViagensRepository;
 import br.com.ifsp.ApiConsultaViagens.service.ServicePassagem;
 
@@ -33,6 +35,9 @@ public class PassagemAPIService {
     
     @Autowired 
     private ViagensRepository viagemRepository;
+    
+    @Autowired 
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     public PassagemAPIService(ServicePassagem servicePassagem) {
@@ -57,17 +62,27 @@ public class PassagemAPIService {
     }
     
     @PostMapping
-    public ResponseEntity<String> createPassagem2(@RequestBody PassagensDTO passagemDTO) {
+    public ResponseEntity<String> createPassagem2(@RequestBody PassagensPostDTO passagemDTO) {
         Long viagemId = passagemDTO.getViagemId();
         if (viagemId == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID da Viagem não pode ser nulo");
         }
         
+        Long usuarioId = passagemDTO.getUsuarioId();
+        if (usuarioId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID do Usuário não pode ser nulo");
+        }
+        
         Viagem viagem = viagemRepository.findById(viagemId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Viagem não encontrada"));
+        
+        Usuario user= usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
+
 
         Passagem passagem = new Passagem();
         passagem.setViagem(viagem);
+        passagem.setUser(user);
         passagem.setPassagemOrigem(passagemDTO.getPassagemOrigem());
         passagem.setPassagemDestino(passagemDTO.getPassagemDestino());
         passagem.setDataCompra(passagemDTO.getDataCompra());
@@ -80,10 +95,25 @@ public class PassagemAPIService {
         return ResponseEntity.ok("Passagem criada com sucesso: " + passagem.getPassagemId());
     }
 
-    @PutMapping
-    public String updatePassagem(@RequestBody Passagem passagem) {
-        logger.info("Chamando updatePassagem com passagemId: " + passagem.getPassagemId());
-        return servicePassagem.updatePassagem(passagem);
+    @PutMapping("/{passagemId}")
+    public ResponseEntity<Passagem> updatePassagem(@PathVariable Long passagemId ,@RequestBody Passagem passagemAtualizada) {
+       
+        
+        Optional<Passagem> optionalPassagem = passagemRepository.findById(passagemId);
+        
+        if (!optionalPassagem.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        Passagem passagem = optionalPassagem.get();
+        passagem.setDataChegada(passagemAtualizada.getDataChegada());
+        passagem.setDataCompra(passagemAtualizada.getDataCompra());
+        passagem.setPassagemDestino(passagemAtualizada.getPassagemDestino());
+        passagem.setPassagemOrigem(passagemAtualizada.getPassagemOrigem());
+        passagem.setPassagemValor(passagemAtualizada.getPassagemValor());
+        
+        Passagem updatedpassagem = passagemRepository.save(passagem);
+        return ResponseEntity.ok(updatedpassagem);
     }
 
     @DeleteMapping("/{passagemId}")

@@ -1,9 +1,17 @@
 package br.com.ifsp.ApiConsultaViagens.models;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,9 +24,14 @@ public class Usuario {
     private String usuario;
     private String senha;
     
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    private List<Passagem> passagem;
+    
     
 
-    public Usuario() {}
+
+	public Usuario() {}
 
     public Usuario(Long usuarioId, String usuario, String senha) {
         this.usuarioId = usuarioId;
@@ -49,5 +62,14 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+
+    public List<Passagem> getPassagem() {
+		return passagem;
+	}
+
+	public void setPassagem(List<Passagem> passagem) {
+		this.passagem = passagem;
+	}
 }
 
